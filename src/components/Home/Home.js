@@ -8,7 +8,8 @@ class Home extends Component{
 
     state = {
         items: [],
-        loading: true
+        loading: true,
+        favorites: []
     }
 
     componentDidMount(){
@@ -18,16 +19,34 @@ class Home extends Component{
                 this.setState({
                     loading: false,
                     items: response.data.items
+                });
+                const items = JSON.parse(localStorage.getItem("items"));
+                this.setState({
+                    favorites: items
                 })
             })
             .catch(e => console.log(e))
+    }
+
+    addToFavHandler = (id) => {
+        const item = this.state.items.find(item => item.id === id);
+        let favs = [];
+        if(this.state.favorites){
+            favs = [...this.state.favorites, item.id];
+        }else{
+            favs.push(item.id);
+        }
+        this.setState({
+            favorites: favs
+        })
+        localStorage.setItem("items", JSON.stringify(favs));
     }
 
     render(){
 
         let content = <p>Loading</p>;
         if(!this.state.loading){
-            content = this.state.items.map(item => <Card headline = {item.item.headline[0]} key={item.id}/>);
+            content = this.state.items.map(item => <Card headline = {item.item.headline[0]} key={item.id} clicked={() => this.addToFavHandler(item.id)}/>);
             
         }
 

@@ -4,7 +4,13 @@ import styles from './Card.module.css';
 function Card(props) {
     return (
         <div className={styles.Card}>
-            {props.headline}
+            <div>
+                {props.headline}
+            </div>
+
+            <button onClick={props.clicked}>Add to favorites</button>
+            
+
         </div>
     )
 }
