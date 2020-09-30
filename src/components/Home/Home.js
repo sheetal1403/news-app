@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
+import styles from './Home.module.css';
 import Card from '../Card/Card';
+
 
 class Home extends Component{
 
@@ -23,14 +25,15 @@ class Home extends Component{
 
     render(){
 
-        let items = <p>Loading</p>;
+        let content = <p>Loading</p>;
         if(!this.state.loading){
-            items = this.state.items.map(item => <Card headline = {item.item.headline[0]} key={item.id}/>)
+            content = this.state.items.map(item => <Card headline = {item.item.headline[0]} key={item.id}/>);
+            
         }
 
         return (
-            <div>
-               {items} 
+            <div className={styles.Home}>
+              {content}
             </div>
         )
     }

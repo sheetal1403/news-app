@@ -1,0 +1,19 @@
+.Card{
+    flex-basis: 30%;
+    margin: 10px;
+    background-color: bisque;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 950px){
+    .Card{
+        flex-basis: 40%;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .Card{
+        flex-basis: 90%;
+    }
+}
