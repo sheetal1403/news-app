@@ -46,7 +46,12 @@ class Home extends Component{
 
         let content = <p>Loading</p>;
         if(!this.state.loading){
-            content = this.state.items.map(item => <Card headline = {item.item.headline[0]} key={item.id} clicked={() => this.addToFavHandler(item.id)}/>);
+            content = this.state.items.map(item => 
+                <Card 
+                    headline = {item.item.headline[0]} 
+                    key={item.id} 
+                    clicked={() => this.addToFavHandler(item.id)}
+                    fav={this.state.favorites.includes(item.id)}/>);
             
         }
 
