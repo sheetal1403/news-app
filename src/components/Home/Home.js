@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import styles from './Home.module.css';
 import Card from '../Card/Card';
+import SearchBar from '../SearchBar/SeachBar';
 
 
 class Home extends Component{
@@ -68,9 +69,13 @@ class Home extends Component{
         }
 
         return (
-            <div className={styles.Home}>
-              {content}
-            </div>
+            <React.Fragment>
+                <SearchBar/>
+                <div className={styles.Home}>
+                    {content}
+                </div>
+            </React.Fragment>
+                
         )
     }
 

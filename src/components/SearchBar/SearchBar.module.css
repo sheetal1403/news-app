@@ -1,0 +1,26 @@
+.SearchBar{
+    margin-bottom: 20px;
+}
+
+.SearchForm{
+    display: flex;
+    justify-content: center;
+}
+
+.SearchInput{
+    border: none;
+    padding: 10px;
+    width: 400px;
+}
+
+.SearchIcon{
+    background-color: white;
+    padding: 10px;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 950px){
+    .SearchInput{
+        width: 60%;
+    }
+}
