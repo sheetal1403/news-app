@@ -10,7 +10,9 @@ class Home extends Component{
     state = {
         items: [],
         loading: true,
-        favorites: []
+        favorites: [],
+        searchTerm: '',
+        filteredItems: []
     }
 
     componentDidMount(){
@@ -55,11 +57,26 @@ class Home extends Component{
         
     }
 
+    submitForm = (event, ref) => {
+        event.preventDefault();
+        event.persist();
+        let filteredItems = this.state.items.filter(item => item.item.headline[0].toLowerCase().indexOf(ref.trim().toLowerCase()) !== -1)
+        this.setState({
+            searchTerm: ref.trim(),
+            filteredItems
+        });
+        
+    }
+
     render(){
 
         let content = <p>Loading</p>;
+        let itemsToBeDisplayed = this.state.items;
+        if(this.state.searchTerm !== ''){
+            itemsToBeDisplayed = this.state.filteredItems;
+        }
         if(!this.state.loading){
-            content = this.state.items.map(item => 
+            content = itemsToBeDisplayed.map(item => 
                 <Card 
                     headline = {item.item.headline[0]} 
                     key={item.id} 
@@ -70,12 +87,12 @@ class Home extends Component{
 
         return (
             <React.Fragment>
-                <SearchBar/>
+                <SearchBar submit={(e, ref) => this.submitForm(e, ref)}/>
                 <div className={styles.Home}>
                     {content}
                 </div>
             </React.Fragment>
-                
+
         )
     }
 
