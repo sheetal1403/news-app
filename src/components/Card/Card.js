@@ -12,12 +12,16 @@ function Card(props) {
 
     return (
         <div className={styles.Card}>
-            <div>
-                {props.headline}
-            </div>
-            <span onClick={() => props.clicked(props.fav)} className={styles.Icon}>
-                {icon}
-            </span>
+            
+                <h3 className={styles.CardHeader}>
+                    {props.headline}
+                </h3>
+            
+                <span onClick={() => props.clicked(props.fav)} className={styles.Icon}>
+                    {icon}
+                </span>
+            
+            
         </div>
     )
 }

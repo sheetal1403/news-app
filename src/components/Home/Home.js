@@ -45,7 +45,7 @@ class Home extends Component{
             }
         }else{
                 //If item is in the favorites array, remove it
-                favs = {...this.state.favorites};
+                favs = [...this.state.favorites];
                 favs = favs.filter(itemId => itemId !== id)
             }
 
@@ -88,10 +88,10 @@ class Home extends Component{
         if(!this.state.loading){
             content = itemsToBeDisplayed.map(item => 
                 <Card 
-                    headline = {item.item.headline[0]} 
-                    key={item.id} 
-                    clicked={(fav) => this.addRemoveFavHandler(item.id, fav)}
-                    fav={this.state.favorites ? this.state.favorites.includes(item.id) : false}/>);
+                headline = {item.item.headline[0]} 
+                key={item.id} 
+                clicked={(fav) => this.addRemoveFavHandler(item.id, fav)}
+                fav={this.state.favorites ? this.state.favorites.includes(item.id) : false}/>)
             
         }
 

@@ -14,6 +14,11 @@
     display: inline-block;
 }
 
+.CardHeader{
+    margin: 0;
+    font-weight: 400;
+}
+
 @media screen and (max-width: 950px){
     .Card{
         width: calc((100% - 40px)/ 2 );
