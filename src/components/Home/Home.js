@@ -16,43 +16,45 @@ class Home extends Component{
     }
 
     componentDidMount(){
-        
+        //Fetch all reports 
         axios.get('https://nl-static-site-assets.s3.ap-south-1.amazonaws.com/reports.json')
             .then(response =>{
                 this.setState({
                     loading: false,
                     items: response.data.items
                 });
+                //Fetch favorites from local storage and set state of 'favorites'
                 const items = JSON.parse(localStorage.getItem("items"));
                 this.setState({
                     favorites: items
                 })
             })
-            .catch(e => console.log(e))
-
-        
+            .catch(e => console.log(e))     
     }
 
-    addToFavHandler = (id, fav) => {
+    addRemoveFavHandler = (id, fav) => {
         let favs = [];
         if(!fav){
-            
+            //If the item is not already a favorite, add to favs array
             const item = this.state.items.find(item => item.id === id);
             
-            if(this.state.favorites){
+            if(this.state.favorites){ //If there are favorites in the array
                 favs = [...this.state.favorites, item.id];
             }else{
                 favs.push(item.id);
             }
         }else{
-                //Remove from favorites
-                favs = this.state.favorites;
+                //If item is in the favorites array, remove it
+                favs = {...this.state.favorites};
                 favs = favs.filter(itemId => itemId !== id)
-                console.log(favs)
             }
+
+            //UPdate the state of favorites array
             this.setState({
                 favorites: favs
             })
+
+            //Locally store the favorite items
             localStorage.setItem("items", JSON.stringify(favs));
         
     }
@@ -60,7 +62,13 @@ class Home extends Component{
     submitForm = (event, ref) => {
         event.preventDefault();
         event.persist();
-        let filteredItems = this.state.items.filter(item => item.item.headline[0].toLowerCase().indexOf(ref.trim().toLowerCase()) !== -1)
+
+        //Get all items where headline string contains the search term
+        let filteredItems = this.state.items.filter(item => 
+            item.item.headline[0]
+            .toLowerCase()
+            .indexOf(ref.trim().toLowerCase()) !== -1)
+
         this.setState({
             searchTerm: ref.trim(),
             filteredItems
@@ -72,6 +80,8 @@ class Home extends Component{
 
         let content = <p>Loading</p>;
         let itemsToBeDisplayed = this.state.items;
+
+        //If a search term exists, filtered items to be displayed
         if(this.state.searchTerm !== ''){
             itemsToBeDisplayed = this.state.filteredItems;
         }
@@ -80,7 +90,7 @@ class Home extends Component{
                 <Card 
                     headline = {item.item.headline[0]} 
                     key={item.id} 
-                    clicked={(fav) => this.addToFavHandler(item.id, fav)}
+                    clicked={(fav) => this.addRemoveFavHandler(item.id, fav)}
                     fav={this.state.favorites ? this.state.favorites.includes(item.id) : false}/>);
             
         }

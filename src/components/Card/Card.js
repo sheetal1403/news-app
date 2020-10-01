@@ -18,10 +18,6 @@ function Card(props) {
             <span onClick={() => props.clicked(props.fav)} className={styles.Icon}>
                 {icon}
             </span>
-            
-            
-            
-
         </div>
     )
 }
