@@ -15,9 +15,9 @@ function Card(props) {
             <div>
                 {props.headline}
             </div>
-            <div onClick={props.clicked}>
+            <span onClick={() => props.clicked(props.fav)} className={styles.Icon}>
                 {icon}
-            </div>
+            </span>
             
             
             

@@ -26,20 +26,32 @@ class Home extends Component{
                 })
             })
             .catch(e => console.log(e))
+
+        
     }
 
-    addToFavHandler = (id) => {
-        const item = this.state.items.find(item => item.id === id);
+    addToFavHandler = (id, fav) => {
         let favs = [];
-        if(this.state.favorites){
-            favs = [...this.state.favorites, item.id];
+        if(!fav){
+            
+            const item = this.state.items.find(item => item.id === id);
+            
+            if(this.state.favorites){
+                favs = [...this.state.favorites, item.id];
+            }else{
+                favs.push(item.id);
+            }
         }else{
-            favs.push(item.id);
-        }
-        this.setState({
-            favorites: favs
-        })
-        localStorage.setItem("items", JSON.stringify(favs));
+                //Remove from favorites
+                favs = this.state.favorites;
+                favs = favs.filter(itemId => itemId !== id)
+                console.log(favs)
+            }
+            this.setState({
+                favorites: favs
+            })
+            localStorage.setItem("items", JSON.stringify(favs));
+        
     }
 
     render(){
@@ -50,8 +62,8 @@ class Home extends Component{
                 <Card 
                     headline = {item.item.headline[0]} 
                     key={item.id} 
-                    clicked={() => this.addToFavHandler(item.id)}
-                    fav={this.state.favorites.includes(item.id)}/>);
+                    clicked={(fav) => this.addToFavHandler(item.id, fav)}
+                    fav={this.state.favorites ? this.state.favorites.includes(item.id) : false}/>);
             
         }
 

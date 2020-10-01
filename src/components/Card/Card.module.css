@@ -8,6 +8,12 @@
     background-color: white
 }
 
+.Icon{
+    cursor: pointer;
+    margin-top: 10px;
+    display: inline-block;
+}
+
 @media screen and (max-width: 950px){
     .Card{
         flex-basis: 40%;
