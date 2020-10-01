@@ -12,7 +12,8 @@ class Home extends Component{
         loading: true,
         favorites: [],
         searchTerm: '',
-        filteredItems: []
+        filteredItems: [],
+        error: false
     }
 
     componentDidMount(){
@@ -29,7 +30,7 @@ class Home extends Component{
                     favorites: items
                 })
             })
-            .catch(e => console.log(e))     
+            .catch(e => this.setState({error: true, loading: false}))    
     }
 
     addRemoveFavHandler = (id, fav) => {
@@ -78,29 +79,35 @@ class Home extends Component{
 
     render(){
 
-        let content = <p>Loading</p>;
+        let content = this.state.error ? <h2 style={{textAlign: 'center'}}>Error in loading</h2> : <h2 style={{textAlign: 'center'}}>Loading</h2>;
         let itemsToBeDisplayed = this.state.items;
 
         //If a search term exists, filtered items to be displayed
         if(this.state.searchTerm !== ''){
             itemsToBeDisplayed = this.state.filteredItems;
         }
-        if(!this.state.loading){
-            content = itemsToBeDisplayed.map(item => 
-                <Card 
-                headline = {item.item.headline[0]} 
-                key={item.id} 
-                clicked={(fav) => this.addRemoveFavHandler(item.id, fav)}
-                fav={this.state.favorites ? this.state.favorites.includes(item.id) : false}/>)
+        if(!this.state.loading && !this.state.error){
+            content =<div className={styles.Home}>
+                        {itemsToBeDisplayed.map(item => 
+                        <Card 
+                        headline = {item.item.headline[0]} 
+                        key={item.id} 
+                        clicked={(fav) => this.addRemoveFavHandler(item.id, fav)}
+                        fav={this.state.favorites ? this.state.favorites.includes(item.id) : false}/>)}
+                    </div>
+            
+            
+            
+            
             
         }
 
         return (
             <React.Fragment>
                 <SearchBar submit={(e, ref) => this.submitForm(e, ref)}/>
-                <div className={styles.Home}>
+                
                     {content}
-                </div>
+                
             </React.Fragment>
 
         )
