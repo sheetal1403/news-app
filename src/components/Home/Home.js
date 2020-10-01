@@ -14,7 +14,7 @@ class Home extends Component{
 
     componentDidMount(){
         
-        axios.get('/reports.json')
+        axios.get('https://nl-static-site-assets.s3.ap-south-1.amazonaws.com/reports.json')
             .then(response =>{
                 this.setState({
                     loading: false,
