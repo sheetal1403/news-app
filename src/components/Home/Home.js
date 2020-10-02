@@ -64,12 +64,15 @@ class Home extends Component{
         event.preventDefault();
         event.persist();
 
-        //Get all items where headline string contains the search term
-        let filteredItems = this.state.items.filter(item => 
-            item.item.headline[0]
-            .toLowerCase()
-            .indexOf(ref.trim().toLowerCase()) !== -1)
+        //Get an array of search terms
+        let searchWords = ref.trim().split(' ');
 
+        //Get all items where headline string contains any of the the search term
+        let filteredItems = this.state.items.filter(item => { 
+                    let validSearchWords = searchWords.filter(word => item.item.headline[0].toLowerCase().indexOf(word.toLowerCase()) !== -1);
+                    return !!validSearchWords.length
+                }
+               )
         this.setState({
             searchTerm: ref.trim(),
             filteredItems
